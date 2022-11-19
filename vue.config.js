@@ -4,10 +4,10 @@ const args = process.argv
 function resolve(dir) {
     return path.join(__dirname, dir)
 }
-
 const cfIndex = args && args.findIndex(v => v === '--config')
-if (cfIndex && args[cfIndex + 1] === 'renderer') {
-    module.exports = require('./vue.renderer.config')
+if (cfIndex && args[cfIndex + 1]) {
+    const configFile = args[cfIndex + 1]
+    module.exports = require(`./${configFile}`)
     return
 }
 module.exports = {

@@ -4,8 +4,9 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build --config renderer",
-    "electron:build": "vue-cli-service electron:build",
+    "build:renderer": "vue-cli-service build --config vue.renderer.config.js",
+    "build:main": "vue-cli-service --config vue.main.config.js electron:build --legacy",
+    "electron:build": "vue-cli-service electron:build --legacy",
     "electron:serve": "vue-cli-service electron:serve",
     "postinstall": "electron-builder install-app-deps",
     "postuninstall": "electron-builder install-app-deps"
