@@ -1,7 +1,8 @@
 // Modules to control application life and create native browser window
 const {app, BrowserWindow,ipcMain} = require('electron')
 const path = require('path')
-const {PdfWindow} =  require("electron-printview");
+const {printPreview} = require('electron-print-preview')
+console.log(printPreview.default)
 function createWindow () {
     // Create the browser window.
     const mainWindow = new BrowserWindow({
@@ -26,8 +27,8 @@ app.whenReady().then(() => {
 
     ipcMain.on('viewpdf',(event,data)=>{
         console.log('viewpdf','click...')
-        PdfWindow.PrintPreview.getIntance().createPdfWindow(event, {
-            htmlString:`hello`
+        printPreview.default.getIntance().createPdfWindow(event, {
+            htmlString:`<style>h1{color: #42b983}</style> <h1>hello world !</h1>`
         })
     })
 

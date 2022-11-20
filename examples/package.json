@@ -1,5 +1,5 @@
 {
-  "name": "electron-quick-start",
+  "name": "electron-quick-start-print",
   "version": "1.0.0",
   "description": "A minimal Electron application",
   "main": "main.js",
@@ -20,6 +20,6 @@
     "electron": "^13.0.0"
   },
   "dependencies": {
-    "electron-printview": "^1.0.1"
+    "electron-print-preview": "^1.0.3"
   }
 }

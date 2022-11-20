@@ -7,7 +7,7 @@
     "sourceMap": true
   },
   "files": [
-    "../src/main/PdfWindow.ts",
+    "../src/main/printPreview.ts",
     "../src/main/preload.ts"
   ]
 }

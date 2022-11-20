@@ -1,6 +1,6 @@
 'use strict'
 import {app, protocol, BrowserWindow} from 'electron'
-import {PrintPreview} from './pdfwindow'
+import PrintPreview from './printPreview'
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
 // Scheme must be registered before the app is ready
@@ -10,7 +10,7 @@ protocol.registerSchemesAsPrivileged([
 
 async function createWindow() {
   PrintPreview.getIntance().createPdfWindow(undefined,{
-    htmlString:`hello world !`
+    htmlString:`<style>h1{color: #42b983}</style> <h1>hello world !</h1>`
   })
 }
 

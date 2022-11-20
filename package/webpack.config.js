@@ -1,10 +1,10 @@
 module.exports = {
     entry: {
-        PdfWindow: {
-            import: '../src/main/PdfWindow.ts',
+        printPreview: {
+            import: '../src/main/printPreview.ts',
             filename: '[name].js',
             library: {
-                name: 'PdfWindow',
+                name: 'printPreview',
                 type: 'commonjs',
             },
         },

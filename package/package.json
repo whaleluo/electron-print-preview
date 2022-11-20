@@ -1,6 +1,6 @@
 {
-  "name": "electron-printview",
-  "version": "1.0.1",
+  "name": "electron-print-preview",
+  "version": "1.0.3",
   "author": {
     "name": "jingyu",
     "email": "whaleluo@163.com"
@@ -10,16 +10,17 @@
   "scripts": {
     "build": "webpack --config webpack.config.js --mode=production"
   },
-  "main": "dist/PdfWindow.js",
+  "main": "dist/printPreview.js",
   "files": [
     "dist"
   ],
   "keywords": [
     "pdf",
     "print",
-    "print-view",
-    "electron",
-    "electron-pdf-preview"
+    "pdf-viewer",
+    "print-viewer",
+    "electron-pdf-preview",
+    "electron-print-preview"
   ],
   "engines": {
     "node": ">=10.0.0"

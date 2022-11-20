@@ -131,7 +131,7 @@ const initListener = (contents: webContents, that: _Pdf) => {
                 isDefault: list[index].isDefault,
             });
         }
-        console.debug("getPrinterList", retArr);
+        isDevelopment && console.debug("getPrinterList", retArr);
         e.reply("get-printer-list-reply", {
             printDevices: retArr,
         });
@@ -220,7 +220,7 @@ class _Pdf {
         if (this.lastPdfPath) {
             fs.unlink(this.lastPdfPath, (err) => {
                 if (err) {
-                    console.info(err.name);
+                    console.error(err.name);
                 }
                 return
                 this.lastPdfPath = "";
@@ -267,7 +267,7 @@ class _Pdf {
                 await contens.executeJavaScript("document.head.innerHTML=" + htmlStyle)
                 return res(true)
             }).catch(e => {
-                console.log(e)
+                console.error(e)
                 return res(false)
             });
         })
@@ -283,7 +283,7 @@ class _Pdf {
             contens.executeJavaScript("document.baseURI").then((r) => {
                 return res(r);
             }).catch(e => {
-                console.log(e)
+                console.error(e)
                 return res("");
             });
         })
@@ -299,7 +299,7 @@ class _Pdf {
                 const r = await contens.executeJavaScript(`document.querySelectorAll('link[rel="stylesheet"]').length==[].slice.call(document.styleSheets).filter(({href})=>href!=null).length`)
                 return resolve(true)
             } catch (e) {
-                console.log(true)
+                console.error(true)
                 return resolve(false)
             }
         })
@@ -489,7 +489,7 @@ class _Pdf {
             .then((data: any) => {
                 fs.writeFile(pdfPath, data, (error) => {
                     if (error) throw error;
-                    console.info(`Wrote PDF successfully to ${pdfPath}`);
+                    isDevelopment && console.info(`Wrote PDF successfully to ${pdfPath}`);
                     this.pdfView.webContents.loadURL(_Pdf.getPdfUrl(pdfPath));
                 });
             })
@@ -515,4 +515,4 @@ class PrintPreview {
 
 }
 
-export {PrintPreview}
+export default PrintPreview

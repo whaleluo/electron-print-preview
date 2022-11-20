@@ -1,6 +1,6 @@
-# electron-printview
+# electron-print-preview
 
-## How to use electron-printview in project
+## How to use electron-print-preview in project
 
 1. create a electron project
 2. ```npm i electron-printview```
@@ -13,3 +13,4 @@ const {PdfWindow} =  require("electron-printview");
             htmlString:`hello`
         })
 ```
+![](examples/assets/example1.png)

@@ -1,5 +1,5 @@
 {
-  "name": "vue3-electron-webpack-ts",
+  "name": "electron-print-preview",
   "version": "0.1.0",
   "private": true,
   "scripts": {
