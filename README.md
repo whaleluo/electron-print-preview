@@ -1,19 +1,15 @@
-# vue3-electron-webpack-ts
+# electron-printview
 
-## Project setup
-```
-npm install
-```
+## How to use electron-printview in project
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+1. create a electron project
+2. ```npm i electron-printview```
+3. a example like ./examples project
 
-### Compiles and minifies for production
-```
-npm run build
-```
+```js
+const {PdfWindow} =  require("electron-printview");
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+ PdfWindow.PrintPreview.getIntance().createPdfWindow(event, {
+            htmlString:`hello`
+        })
+```

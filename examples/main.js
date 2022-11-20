@@ -27,7 +27,6 @@ app.whenReady().then(() => {
     ipcMain.on('viewpdf',(event,data)=>{
         console.log('viewpdf','click...')
         PdfWindow.PrintPreview.getIntance().createPdfWindow(event, {
-            type:'create',
             htmlString:`hello`
         })
     })
