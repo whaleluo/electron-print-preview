@@ -9,7 +9,8 @@
     "electron:build": "vue-cli-service electron:build --legacy",
     "electron:serve": "vue-cli-service electron:serve",
     "postinstall": "electron-builder install-app-deps",
-    "postuninstall": "electron-builder install-app-deps"
+    "postuninstall": "electron-builder install-app-deps",
+    "build:package": "npm run build:renderer && cd package && npm run build"
   },
   "main": "background.js",
   "dependencies": {

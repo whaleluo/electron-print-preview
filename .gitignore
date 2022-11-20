@@ -25,4 +25,12 @@ pnpm-debug.log*
 #Electron-builder output
 /dist_electron
 #vue-builder output
+
+package-lock.json
+
 /dist*
+package/node_modules
+package/package-lock.json
+
+examples/node_modules
+examples/package-lock.json

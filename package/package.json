@@ -1,0 +1,31 @@
+{
+  "name": "electron-printview",
+  "version": "1.0.1",
+  "author": {
+    "name": "jingyu",
+    "email": "whaleluo@163.com"
+  },
+  "description": "A print preview module that simulates chrome browser",
+  "license": "MIT",
+  "scripts": {
+    "build": "webpack --config webpack.config.js --mode=production"
+  },
+  "main": "dist/PdfWindow.js",
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "pdf",
+    "print",
+    "print-view",
+    "electron",
+    "electron-pdf-preview"
+  ],
+  "engines": {
+    "node": ">=10.0.0"
+  },
+  "devDependencies": {
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.0"
+  }
+}

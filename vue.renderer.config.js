@@ -6,7 +6,7 @@ function resolve (dir) {
 console.log('building with vue app ...')
 module.exports = {
     publicPath: './',
-    outputDir: resolve("./dist_vue"),
+    outputDir: resolve("./package/dist"),
     assetsDir:'assets',
     filenameHashing:false,
     productionSourceMap:false,
