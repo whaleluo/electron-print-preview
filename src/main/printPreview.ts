@@ -30,9 +30,10 @@ interface PdfCreateOptions {
 }
 
 interface PdfReloadOptions {
-    isLandscape: boolean,
-    margin: number,
-    pageSize: string
+    isLandscape?: boolean,
+    margin?: number,
+    pageSize?: string,
+    scaleFactor?:number
 }
 
 interface configPdfOptions {
@@ -66,6 +67,10 @@ interface configPdfOptions {
      * defaultMargin
      */
     defaultMargin?: number,
+    /**
+     * defaultScaleFactor
+     */
+    defaultScaleFactor?:number
 }
 
 const defaultConfigPdfOptions: configPdfOptions = {
@@ -75,9 +80,54 @@ const defaultConfigPdfOptions: configPdfOptions = {
     controlPanelWidth: 370,
     defaultPageSize: "A4",
     defaultIsLandscape: false,
-    defaultMargin: 10
+    defaultMargin: 10,
+    defaultScaleFactor:100
 };
 
+const _PageSize = {
+    A3:{
+        landscape:{
+            width: 420 * 1000,
+            height: 297 * 1000
+        },
+        portrait:'A3'
+    },
+    A4:{
+        landscape:{
+            width: 297 * 1000,
+            height: 210 * 1000
+        },
+        portrait:'A4'
+    },
+    A5:{
+        landscape:{
+            width: 210 * 1000,
+            height: 148 * 1000
+        },
+        portrait:'A5'
+    },
+    Legal:{
+        landscape:{
+            width: 356 * 1000,
+            height: 216 * 1000
+        },
+        portrait:'Legal'
+    },
+    Letter:{
+        landscape:{
+            width: 279 * 1000,
+            height: 216 * 1000
+        },
+        portrait:'Letter'
+    },
+    Tabloid:{
+        landscape:{
+            width: 432 * 1000,
+            height: 279 * 1000
+        },
+        portrait:'Tabloid'
+    }
+}
 const bodyStyle = `
         <style>
         html{
@@ -109,13 +159,14 @@ const initListener = (contents: webContents, that: _Pdf) => {
         const options: WebContentsPrintOptions = {
             silent: true,
             deviceName: data.deviceName,
-            pageSize: that.pageSize,
+            /**@ts-ignore**/
+            pageSize: _PageSize[that.pageSize].portrait,
             printBackground: true,
             margins: {
                 marginType: "none",
             },
             landscape: that.isLandscape,
-            scaleFactor: 100,
+            scaleFactor: that.scaleFactor,
         };
         contents.print(options, (success: boolean, failureReason: string) => {
             if (!success) console.debug("silentPrint Error: ", failureReason);
@@ -170,6 +221,7 @@ class _Pdf {
     private static readonly indexPage = isDevelopment ? "http://localhost:8080/#/" :path.resolve(__dirname,'index.html')
     pageSize: string;
     isLandscape: boolean;
+    scaleFactor: number;
     private cf: configPdfOptions
     private lastPdfPath = "";
     private pdfPath = "";
@@ -206,6 +258,7 @@ class _Pdf {
         this.name = this.cf.name
         this.isLandscape = this.cf.defaultIsLandscape as boolean
         this.margin = this.cf.defaultMargin as number
+        this.scaleFactor = this.cf.defaultScaleFactor as number
         initListener(this.pdfHandleWin.webContents, this)
         this.initPdfListener()
     }
@@ -237,8 +290,9 @@ class _Pdf {
             printBackground: true,
             printSelectionOnly: false,
             landscape: false,
-            pageSize: this.isLandscape ? {width: 297 * 1000, height: 210 * 1000} : this.pageSize,
-            scaleFactor: 100,
+            /**@ts-ignore */
+            pageSize: this.isLandscape ? _PageSize[this.pageSize].landscape : _PageSize[this.pageSize].portrait,
+            scaleFactor: this.scaleFactor,
         }
     };
 
@@ -379,13 +433,25 @@ class _Pdf {
         if (!(this.win && this.pdfHandleWin && this.pdfView && this.htmlString)) {
             console.warn('The instance has been destroyed. Please run it again')
         }
-        if (this.isLandscape === reloadOptions.isLandscape) {
+        if ((typeof this.isLandscape) !=='boolean' || this.isLandscape === reloadOptions.isLandscape) {
             console.info("The current print direction has not changed");
         } else {
-            this.isLandscape = reloadOptions.isLandscape;
+            this.isLandscape = !!reloadOptions.isLandscape;
             isToReload = true;
         }
-        if (this.margin === reloadOptions.margin) {
+        if(!reloadOptions.scaleFactor || this.scaleFactor === reloadOptions.scaleFactor){
+            console.info("The current print scaleFactor has not changed");
+        }else{
+            isToReload = true
+            this.scaleFactor = reloadOptions.scaleFactor
+        }
+        if(!reloadOptions.pageSize || this.pageSize === reloadOptions.pageSize){
+            console.info("The current print pageSize has not changed");
+        }else{
+            isToReload = true
+            this.pageSize = reloadOptions.pageSize
+        }
+        if (!reloadOptions.margin || this.margin === reloadOptions.margin) {
             console.info("The current print margin has not changed");
         } else {
             // If the print margin changes, add a body margin style to simulate the print code office

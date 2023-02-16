@@ -47,10 +47,10 @@
           >
             <option value="10">默认</option>
             <option value="0">无</option>
-            <option v-for="opt in 9" :value="opt">{{ opt }}mm</option>
+            <option v-for="opt in 9" :value="opt" :key="opt">{{ opt }}mm</option>
           </select>
         </div>
-        <div>
+        <!-- <div>
           <span>彩色</span>
           <select v-model="selectedBackColor"
                   disabled
@@ -58,6 +58,22 @@
             <option value="none">黑白色</option>
             <option value="color">彩色</option>
           </select>
+        </div> -->
+         <div>
+          <span>纸张尺寸</span>
+          <select
+              v-model="selectedPageSize"
+              class="devices"
+          >
+            <option v-for="item in pageSize" :value="item" :key="item">{{ item }}</option>
+          </select>
+        </div>
+         <div>
+          <span>缩放</span>
+          <input v-model="selectedScaleFactor" type="number"
+              class="devices"
+              oninput="if(value<0)value=0;if(value>100)value=100;vaue=Math.round(value)"
+            />
         </div>
       </div>
       <div class="btn">
@@ -78,6 +94,10 @@ export default {
       selectedLayout: "portrait",
       selectedBackColor: "none",
       selectedMargin: "10",
+      selectedPageSize:'A4',
+      selectedScaleFactor:100,
+      pageSize:['A3','A4','A5','Legal','Letter','Tabloid'],
+      scaleTimeout:''
     };
 
   },
@@ -92,15 +112,29 @@ export default {
       console.log('the printing direction is changed', newVal, oldVal)
       window.ipcRenderer.send('reload-pdf',{
         isLandscape: newVal == "landscape" ? true : false,
-        margin: this.selectedMargin,
       })
     },
     selectedMargin(newVal, oldVal) {
       console.log('the printing magrin is changed', newVal, oldVal)
       window.ipcRenderer.send('reload-pdf', {
-        isLandscape: this.selectedLayout == "landscape" ? true : false,
         margin: newVal,
       })
+    },
+    selectedPageSize(newVal, oldVal) {
+      console.log('the printing pageSize is changed', newVal, oldVal)
+      window.ipcRenderer.send('reload-pdf', {
+        pageSize:newVal
+      })
+    },
+    selectedScaleFactor(newVal,oldVal){
+      clearTimeout(this.scaleTimeout)
+      this.scaleTimeout = setTimeout(() => {
+        console.log('the printing scaleFactor is changed', newVal, oldVal)
+        window.ipcRenderer.send('reload-pdf', {
+        scaleFactor:newVal
+      })
+      }, 800);
+      
     }
   },
 
@@ -246,7 +280,7 @@ body {
       display: flex;
       margin: 15px 0;
 
-      & > select {
+      & > select,input {
         width: 200px;
         min-width: 200px;
         height: 33px;
