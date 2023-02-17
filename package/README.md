@@ -1,10 +1,10 @@
-English | [中文](README-CN.md)
+English | [中文](https://github.com/whaleluo/electron-print-preview/blob/main/README-CN.md)
 
 > electron-print-preview : Simulates the print preview module in the browser.
 
 ## Install
 
-[![NPM](https://nodei.co/npm/electron-print-preview.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/electron-screenshots/)
+[![NPM](https://nodei.co/npm/electron-print-preview.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/electron-print-preview/)
 
 ## Usage
 

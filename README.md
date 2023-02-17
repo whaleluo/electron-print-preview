@@ -4,7 +4,7 @@ English | [中文](README-CN.md)
 
 ## Install
 
-[![NPM](https://nodei.co/npm/electron-print-preview.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/electron-screenshots/)
+[![NPM](https://nodei.co/npm/electron-print-preview.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/electron-print-preview/)
 
 ## Usage
 

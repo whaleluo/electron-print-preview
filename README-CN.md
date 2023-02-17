@@ -2,7 +2,7 @@
 > electron-print-preview : 模拟浏览器中的打印预览模块。
 ## 安装
 
-[![NPM](https://nodei.co/npm/electron-print-preview.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/electron-screenshots/)
+[![NPM](https://nodei.co/npm/electron-print-preview.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/electron-print-preview/)
 
 ## 使用
 
