@@ -15,11 +15,5 @@
     "demo"
   ],
   "author": "GitHub",
-  "license": "CC0-1.0",
-  "devDependencies": {
-    "electron": "^13.0.0"
-  },
-  "dependencies": {
-    "electron-print-preview": "^1.0.3"
-  }
+  "license": "CC0-1.0"
 }

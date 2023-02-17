@@ -1,19 +1,19 @@
 {
   "name": "electron-print-preview",
-  "version": "1.0.6",
+  "version": "1.2.0",
   "author": {
     "name": "jingyu",
     "email": "whaleluo@163.com"
   },
   "description": "A print preview module that simulates chrome browser",
   "repository": {
-		"type": "git",
-		"url": "https://github.com/whaleluo/electron-print-preview.git"
-	},
-	"homepage": "https://github.com/whaleluo/electron-print-preview",
-	"bugs": {
-		"url": "https://github.com/whaleluo/electron-print-preview/issues"
-	},
+    "type": "git",
+    "url": "https://github.com/whaleluo/electron-print-preview.git"
+  },
+  "homepage": "https://github.com/whaleluo/electron-print-preview",
+  "bugs": {
+    "url": "https://github.com/whaleluo/electron-print-preview/issues"
+  },
   "license": "MIT",
   "scripts": {
     "build": "webpack --config webpack.config.js --mode=production"
@@ -33,7 +33,7 @@
   "engines": {
     "node": ">=10.0.0"
   },
-  "dependencies":{
+  "dependencies": {
     "electron": ">=11.5.0"
   },
   "devDependencies": {

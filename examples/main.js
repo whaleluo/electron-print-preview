@@ -1,7 +1,7 @@
 // Modules to control application life and create native browser window
 const {app, BrowserWindow,ipcMain} = require('electron')
 const path = require('path')
-const {printPreview} = require('electron-print-preview')
+const {printPreview} = require('../package/dist/printPreview')
 console.log(printPreview.default)
 function createWindow () {
     // Create the browser window.
