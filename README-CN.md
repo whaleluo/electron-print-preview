@@ -26,7 +26,7 @@ printPreview.default.getIntance().createPdfWindow(event, {
 ```json5
 {
   externals: {
-    'electron-screenshots': 'require("electron-screenshots")'
+    'electron-print-preview': 'require("electron-print-preview")'
   }
 }
 ```
@@ -40,7 +40,7 @@ module.exports = {
   pluginOptions: {
     electronBuilder: {
       // 不打包，使用 require 加载
-      externals: ['electron-screenshots']
+      externals: ['electron-print-preview']
     }
   }
 }
