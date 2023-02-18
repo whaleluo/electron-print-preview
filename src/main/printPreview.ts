@@ -12,6 +12,8 @@ import {IpcMainEvent} from "electron/main";
 import os from 'os'
 import fs from 'fs'
 import path from 'path'
+// We cannot require the screen module until the app is ready.
+const { screen } = require('electron')
 const isDevelopment = process.env.NODE_ENV !== 'production'
 interface PdfCreateOptions {
     /**
@@ -477,6 +479,11 @@ class _Pdf {
      * @param pdfOptions
      */
     public createPdfWindow(event: IpcMainEvent | undefined, pdfOptions: PdfCreateOptions) {
+        // Create a window that fills the screen's available work area.
+        // const primaryDisplay = screen.getPrimaryDisplay()
+        // const { width, height } = primaryDisplay.workAreaSize //1920 1040
+        // console.log(width,height)
+        //The bottom toolbar is not included at win
         this.htmlString = pdfOptions.htmlString;
         const parentWindow = BrowserWindow.getFocusedWindow();
         let winOptions: BrowserWindowConstructorOptions = {
