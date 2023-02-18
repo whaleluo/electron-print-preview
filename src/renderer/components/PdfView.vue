@@ -105,10 +105,13 @@ export default {
 
   },
   created() {
-    this.ipcRenderListener();
-  },
-  mounted() {
-    window.ipcRenderer.send("get-printer-list");
+    window.ipcRenderer.invoke("get-printer-list-async").then(data=>{
+      console.log("get-printer-list-async", data,arguments);
+      this.printDevices = data.printDevices.reverse();
+      this.selectedPrintDevices = this.printDevices.find(
+          (item) => item.isDefault === true
+      )?.name;
+    })
   },
   watch: {
     selectedLayout(newVal, oldVal) {
@@ -140,29 +143,7 @@ export default {
       
     }
   },
-
-  destroyed() {
-    window.ipcRenderer.removeAllListeners('get-printer-list-reply')
-  },
   methods: {
-    ipcRenderListener: function () {
-      const channels = [
-        [
-          "get-printer-list-reply",
-          (e,data) => {
-            console.log("get-printer-list-reply", e,data);
-            this.printDevices = data.printDevices.reverse();
-            this.selectedPrintDevices = this.printDevices.find(
-                (item) => item.isDefault === true
-            )?.name;
-          },
-        ],
-      ];
-      channels.forEach(([name, listener]) => {
-        window.ipcRenderer.on(name, listener);
-      });
-    },
-
     /**
      * @param silent 是否静默打印
      */

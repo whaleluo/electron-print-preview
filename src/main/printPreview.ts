@@ -2,7 +2,7 @@ import {
     BrowserView,
     BrowserWindow,
     BrowserWindowConstructorOptions,
-    ipcMain,
+    ipcMain, IpcMainInvokeEvent,
     PrintToPDFOptions,
     WebContents,
     webContents,
@@ -173,7 +173,7 @@ const initListener = (contents: webContents, that: _Pdf) => {
         });
     };
 
-    const getPrinterList = (e: IpcMainEvent) => {
+    const getPrinterListAsync = async (e: IpcMainInvokeEvent) => {
         let retArr = [];
         let list = contents.getPrinters();
         for (let index in list) {
@@ -182,10 +182,10 @@ const initListener = (contents: webContents, that: _Pdf) => {
                 isDefault: list[index].isDefault,
             });
         }
-        isDevelopment && console.debug("getPrinterList", retArr);
-        e.reply("get-printer-list-reply", {
-            printDevices: retArr,
-        });
+        isDevelopment && console.debug("getPrinterListAsync", retArr);
+        return {
+            printDevices: retArr
+        }
     };
 
     const closePdfWindow = (e: IpcMainEvent) => {
@@ -198,7 +198,7 @@ const initListener = (contents: webContents, that: _Pdf) => {
     }
 
     ipcMain.on("silent-print", silentPrint);
-    ipcMain.on("get-printer-list", getPrinterList);
+    ipcMain.handle('get-printer-list-async',getPrinterListAsync);
     ipcMain.on("close-current-window", closePdfWindow);
     ipcMain.on('reload-pdf', reloadPdf)
 }
@@ -519,6 +519,7 @@ class _Pdf {
             this.clean()
         });
         this.win.loadURL(_Pdf.indexPage);
+        // this.win.webContents.openDevTools()
     }
 
     private initPdfListener() {
