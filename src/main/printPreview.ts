@@ -157,7 +157,7 @@ const bodyStyle = `
 const initListener = (contents: webContents, that: _Pdf) => {
     const silentPrint = (e: IpcMainEvent, data: any) => {
         const options: WebContentsPrintOptions = {
-            silent: true,
+            silent: data.silent,
             deviceName: data.deviceName,
             /**@ts-ignore**/
             pageSize: _PageSize[that.pageSize].portrait,

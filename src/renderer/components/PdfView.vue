@@ -75,6 +75,9 @@
               oninput="if(value<0)value=0;if(value>100)value=100;vaue=Math.round(value)"
             />
         </div>
+        <div class="sys-print">
+          <a @click.prevent="print(false)">使用系统对话框打印</a>
+        </div>
       </div>
       <div class="btn">
         <button class="print" @click="print">打印</button>
@@ -160,9 +163,13 @@ export default {
       });
     },
 
-    print() {
+    /**
+     * @param silent 是否静默打印
+     */
+    print(silent = true) {
       if (this.selectedPrintDevices) {
         window.ipcRenderer.send("silent-print", {
+          silent:silent,
           deviceName: this.selectedPrintDevices,
         });
         window.ipcRenderer.send("close-current-window", {
@@ -195,7 +202,7 @@ html,body, #app, body, .container, .options {
   box-sizing: border-box;
   -webkit-app-region: no-drag;
 }
-button,input,select{
+button,input,select,a{
   -webkit-app-region: no-drag;
 }
 
@@ -375,6 +382,13 @@ body {
         font-size: 87%;
       }
     }
+  }
+}
+.sys-print{
+  a{
+    color: #818080;
+    display: inline-block;
+    cursor: pointer;
   }
 }
 </style>
