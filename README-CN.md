@@ -1,5 +1,5 @@
 [English](README.md) | 中文
-> electron-print-preview : 模拟浏览器中的打印预览模块。
+> electron-print-preview : 模拟浏览器中的打印预览模块。(参考浏览器为electron项目提供打印预览功能)
 ## 安装
 
 [![NPM](https://nodei.co/npm/electron-print-preview.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/electron-print-preview/)
@@ -12,12 +12,14 @@
 ```js
 const {printPreview}  =  require("electron-print-preview");
 
-printPreview.default.getIntance().createPdfWindow(event, {
-    htmlString:`<style>h1{color: #42b983}</style> <h1>hello world !</h1>`
-})
+async function createWindow() {
+    PrintPreview.getIntance().createPdfWindow(undefined,{
+        htmlString:`<style>h1{color: #42b983}</style> <h1>hello world !</h1>`
+    })
+}
 ```
 
-![](https://whaleluo.oss-cn-beijing.aliyuncs.com/images20230217141521.png)
+![](https://whaleluo.oss-cn-beijing.aliyuncs.com/imageselectron_pdf.gif)
 
 ## 注意
 

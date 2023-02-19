@@ -14,12 +14,14 @@ English | [中文](https://github.com/whaleluo/electron-print-preview/blob/main/
 ```js
 const {printPreview}  =  require("electron-print-preview");
 
-printPreview.default.getIntance().createPdfWindow(event, {
-    htmlString:`<style>h1{color: #42b983}</style> <h1>hello world !</h1>`
-})
+async function createWindow() {
+    PrintPreview.getIntance().createPdfWindow(undefined,{
+        htmlString:`<style>h1{color: #42b983}</style> <h1>hello world !</h1>`
+    })
+}
 ```
 
-![](https://whaleluo.oss-cn-beijing.aliyuncs.com/images20230217141521.png)
+![](https://whaleluo.oss-cn-beijing.aliyuncs.com/imageselectron_pdf.gif)
 
 ## Warning
 
