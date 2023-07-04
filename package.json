@@ -1,37 +1,55 @@
 {
   "name": "electron-print-preview",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "serve": "vue-cli-service serve",
-    "build:renderer": "vue-cli-service build --config vue.renderer.config.js",
-    "build:main": "vue-cli-service --config vue.main.config.js electron:build --legacy",
-    "electron:build": "vue-cli-service electron:build --legacy",
-    "electron:serve": "vue-cli-service electron:serve",
-    "postinstall": "electron-builder install-app-deps",
-    "postuninstall": "electron-builder install-app-deps",
-    "build:package": "npm run build:renderer && cd package && npm run build"
+  "version": "2.0",
+  "author": {
+    "name": "yj",
+    "email": "whaleluo@163.com"
   },
-  "main": "background.js",
-  "dependencies": {
-    "core-js": "^3.6.5",
-    "vue": "^3.0.0",
-    "vue-router": "^4.0.0-0",
-    "vuex": "^4.0.0-0"
+  "description": "A print preview module that simulates chrome browser",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/whaleluo/electron-print-preview.git"
+  },
+  "homepage": "https://github.com/whaleluo/electron-print-preview",
+  "bugs": {
+    "url": "https://github.com/whaleluo/electron-print-preview/issues"
+  },
+  "private": true,
+  "main": "dist/print/printPreview.js",
+  "license": "MIT",
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "pdf",
+    "print",
+    "pdf-viewer",
+    "print-viewer",
+    "electron-pdf-preview",
+    "electron-print-preview"
+  ],
+  "engines": {
+    "node": ">=10.0.0"
   },
   "devDependencies": {
-    "@types/electron-devtools-installer": "^2.2.0",
-    "@vue/cli-plugin-babel": "~4.5.19",
-    "@vue/cli-plugin-router": "~4.5.19",
-    "@vue/cli-plugin-typescript": "~4.5.19",
-    "@vue/cli-plugin-vuex": "~4.5.19",
-    "@vue/cli-service": "~4.5.19",
-    "@vue/compiler-sfc": "^3.0.0",
-    "electron": "^13.0.0",
-    "electron-devtools-installer": "^3.1.0",
-    "sass": "^1.56.0",
-    "sass-loader": "^8.0.2",
-    "typescript": "~4.1.5",
-    "vue-cli-plugin-electron-builder": "~2.1.1"
+    "@babel/core": "^7.21.4",
+    "@babel/preset-env": "^7.21.4",
+    "@rollup/plugin-babel": "^6.0.3",
+    "@rollup/plugin-commonjs": "lastest",
+    "@rollup/plugin-node-resolve": "^15.0.2",
+    "@types/node": "^18.16.1",
+    "electron": "^24.1.2",
+    "rollup": "lastest",
+    "rollup-plugin-typescript2": "^0.34.1",
+    "tslib": "^2.5.0",
+    "typescript": "^5.0.4"
+  },
+  "scripts": {
+    "start": "rollup -c --bundleConfigAsCjs && electron ./dist/example.js",
+    "build": "rollup -c --bundleConfigAsCjs",
+    "dev": "rollup -c -w",
+    "test": "node test/test.js",
+    "pretest": "npm run build",
+    "run": "node src/main.js"
   }
 }

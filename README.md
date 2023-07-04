@@ -1,16 +1,14 @@
-English | [中文](README-CN.md)
-
-> electron-print-preview : Simulates the print preview module in the browser.
-
-## Install
+[English](README.md) | 中文
+> electron-print-preview : 模拟浏览器中的打印预览模块。(参考浏览器为electron项目提供打印预览功能)
+## 安装
 
 [![NPM](https://nodei.co/npm/electron-print-preview.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/electron-print-preview/)
 
-## Usage
+## 使用
 
-1. Create electron project
-2.  ```npm i electron-print-preview```
-3. Use in background.js
+1. 创建一个electron项目 
+2. 安装依赖 ```npm i electron-print-preview```
+3. 调用打印预览api接口
 ```js
 const {printPreview}  =  require("electron-print-preview");
 
@@ -20,11 +18,12 @@ async function createWindow() {
     })
 }
 ```
+
 ![](https://whaleluo.oss-cn-beijing.aliyuncs.com/imageselectron_pdf.gif)
 
-## Warning
+## 注意
 
-- If webpack is used to pack the main process, modify the following configuration in the webpack configuration of the main process
+- 如果使用了 webpack 打包主进程，请在主进程 webpack 配置中修改如下配置
 
 ```json5
 {
@@ -34,7 +33,7 @@ async function createWindow() {
 }
 ```
 
-- `vue-cli-plugin-electron-builder` config example [vue-cli-plugin-electron-builder-issue](https://github.com/nashaofu/vue-cli-plugin-electron-builder-issue/blob/0f774a90b09e10b02f86fcb6b50645058fe1a4e8/vue.config.js#L1-L8)
+- `vue-cli-plugin-electron-builder`配置示例[vue-cli-plugin-electron-builder-issue](https://github.com/nashaofu/vue-cli-plugin-electron-builder-issue/blob/0f774a90b09e10b02f86fcb6b50645058fe1a4e8/vue.config.js#L1-L8)
 
 ```js
 // vue.config.js
@@ -42,6 +41,7 @@ module.exports = {
   publicPath: '.',
   pluginOptions: {
     electronBuilder: {
+      // 不打包，使用 require 加载
       externals: ['electron-print-preview']
     }
   }
