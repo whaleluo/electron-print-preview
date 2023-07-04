@@ -14,7 +14,6 @@
   "bugs": {
     "url": "https://github.com/whaleluo/electron-print-preview/issues"
   },
-  "private": true,
   "main": "dist/print/printPreview.js",
   "license": "MIT",
   "files": [
