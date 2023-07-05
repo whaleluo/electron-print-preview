@@ -44,7 +44,7 @@
     "typescript": "^5.0.4"
   },
   "scripts": {
-    "start": "rollup -c --bundleConfigAsCjs && electron ./dist/example.js",
+    "dev": "rollup -c --bundleConfigAsCjs && electron ./dist/example.js",
     "build": "rollup -c --bundleConfigAsCjs"
   }
 }

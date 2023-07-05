@@ -1,4 +1,4 @@
-import { BrowserView, BrowserWindow, BrowserWindowConstructorOptions,PrintToPDFOptions,IpcMainEvent,WebContentsPrintOptions,dialog} from "electron";
+import { BrowserWindow, BrowserWindowConstructorOptions,PrintToPDFOptions,IpcMainEvent,WebContentsPrintOptions,dialog} from "electron";
 import {
     generatePdfFile,
     getPdfPreviewUrl,
@@ -22,7 +22,6 @@ class _Pdf {
     private isPrintingToPdf = false;
     private isPrinting = false
     private pdfWin: BrowserWindow | any = null;
-    private pdfView: BrowserView | any = null
     private handleWin: BrowserWindow | any = null;
 
     constructor() {
@@ -57,14 +56,6 @@ class _Pdf {
     public getIsRunning(){
         return !(this.pdfWin && this.handleWin) || this.isPrintingToPdf || this.isPrinting
     }
-    private getPdfViewSize() {
-        return {
-            x: 0,
-            y: 0,
-            width: defaultConfigPdfOptions.width - defaultConfigPdfOptions.controlPanelWidth,
-            height: this.pdfWin.getBounds().height,
-        };
-    }
 
     private clean() {
         this.pageSize = defaultConfigPdfOptions.pageSize
@@ -75,10 +66,7 @@ class _Pdf {
     }
 
     public async reloadByPrintOptions(event: IpcMainEvent, reloadOptions: PdfReloadOptions ) {
-
-        this.pdfWin.removeBrowserView(this.pdfView);
         await this.generatePdfAndReload()
-        // this.pdfView.setBounds(this.pdfViewSize);
     }
 
     async print(options:WebContentsPrintOptions){
@@ -129,25 +117,6 @@ class _Pdf {
             this.pdfWin.show()
             this.pdfWin.webContents.openDevTools()
         })
-        //before current window close , set it is null
-        this.pdfView = new BrowserView({
-            webPreferences: {
-                nodeIntegration: true,
-                contextIsolation: false,
-            },
-        })
-        this.pdfView.setAutoResize({
-            width: false,
-            height: false,
-        });
-        this.pdfView.webContents.on("page-title-updated", () => {
-            // If the loaded pdf file is too large, a black screen will be displayed after the page-title is updated
-            this.pdfWin?.setBrowserView(this.pdfView);
-            //BrowserView.setBounds must be called after BrowserWindow.addBrowserView
-            this.pdfView?.setBounds(this.getPdfViewSize());
-        });
-
-
         this.pdfWin.webContents.once('dom-ready', async () => {
             await this.handleWin.loadURL(BLANK_PAGE);
         })
@@ -156,7 +125,6 @@ class _Pdf {
         })
         this.pdfWin.once("closed", () => {
             this.pdfWin = null;
-            this.pdfView = null
             if(!(this.isPrintingToPdf || this.isPrinting) ){
                 this.handleWin.close()
             }
@@ -211,12 +179,12 @@ class _Pdf {
 
     private generatePdfAndReload= async ()=>{
         let errMessage = 'pdf transform failed, please restart app !'
+        let url = ""
         try {
             this.isPrintingToPdf = true
             const pdfPath = await generatePdfFile(this.handleWin.webContents, this.getPrintToPdfOptions())
             this.isPrintingToPdf = false
-            errMessage = 'pdf loading failed, please retry !'
-            await this.pdfView.webContents.loadURL(getPdfPreviewUrl(pdfPath));
+            url = getPdfPreviewUrl(pdfPath)
             errMessage = ''
         }catch (e) {
             console.error(e)
@@ -224,7 +192,7 @@ class _Pdf {
         }finally {
             // chyui window is closed
             if(!errMessage){
-                this.pdfWin?.webContents.send('ready', true)
+                this.pdfWin?.webContents.send('ready', {url})
             }
             if(!this.pdfWin){
                 this.handleWin.close()

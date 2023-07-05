@@ -23,6 +23,13 @@ body {
     height: 100%;
     display: flex;
 }
+iframe{
+  margin:0;
+  padding:0;
+  width:100%;
+  display:flex;
+  border-sizing:border-box;
+}
 
 .container-loading {
     display: flex;
@@ -221,7 +228,8 @@ const headAfter = `
 
 const pdfviewTemplate = `\`
 <div class="container">
-    <div class="container-loading">
+    <iframe :src="this.pdfUrl" v-if="this.pdfUrl && this.ready"></iframe>
+    <div class="container-loading" v-else>
       <div class="loader">
         正在加载预览
         <span class="dot dot-1">.</span>
@@ -330,12 +338,15 @@ const {ipcRenderer} = require("electron")
                 selectedScaleFactor:100,
                 pageSize:['A3','A4','A5','Legal','Letter','Tabloid'],
                 scaleTimeout:'',
-                ready:false
+                ready:false,
+                pdfUrl:''
             };
 
         },
         created() {
-            ipcRenderer.on('ready',res=>{
+            ipcRenderer.on('ready',(e,args)=>{
+                console.log(e,args)
+                this.pdfUrl = args.url
                 this.ready = true
             })
             ipcRenderer.invoke("get-printer-list-async").then(data=>{
