@@ -1,6 +1,6 @@
 import {ipcMain,IpcMainEvent,IpcMainInvokeEvent, WebContentsPrintOptions,app} from "electron";
-import {closeWindow, getPrinterListAsync, translateMM, } from "./putil";
-import {PdfCreateOptions, PdfReloadOptions} from "./ptype";
+import {closeWindow, getPrinterListAsync, translateMM, } from "./util";
+import {PdfCreateOptions, PdfReloadOptions} from "./type";
 import printPreview from "./printPreview";
     ipcMain.handle('get-printer-list-async',getPrinterListAsync);
     ipcMain.handle("close-pdf-window", closeWindow);

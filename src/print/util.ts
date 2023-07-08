@@ -108,7 +108,9 @@ export const webContentsPrint = (webContens: WebContents,options:WebContentsPrin
             if (success) {
                 return res(true)
             }else {
-                dialog.showErrorBox('print',failureReason)
+                if(failureReason !== "Print job canceled"){
+                    dialog.showErrorBox('print',failureReason)
+                }
                 return res(false)
             }
         });
@@ -224,7 +226,6 @@ export const writeDataToHtml = (filePath,data)=>{
     if (!fs.existsSync(dir)) {
         fs.mkdirSync(dir, {recursive: true})
     }
-    console.log(pathToFileURL(filePath))
     fs.writeFileSync(filePath, data)
 }
 

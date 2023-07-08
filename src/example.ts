@@ -10,7 +10,6 @@ const exampleDirname = path.dirname(examplePage);
 if (!fs.existsSync(exampleDirname)) {
     fs.mkdirSync(exampleDirname, {recursive: true})
 }
-console.log(exampleDirname, examplePage, pathToFileURL(examplePage))
 fs.writeFileSync(examplePage, `
 <!DOCTYPE html>
 <html lang="en">

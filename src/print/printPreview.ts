@@ -7,8 +7,8 @@ import {
     BLANK_PAGE,
     INDEX_PAGE,
     PAGE_SIZES, translateMM, getBaseUrl, removeAtPageStyle, webContentsPrint
-} from './putil'
-import {PdfCreateOptions, PdfReloadOptions} from "./ptype";
+} from './util'
+import {PdfCreateOptions, PdfReloadOptions} from "./type";
 const initPage = require('./initPage')
 initPage()
 
@@ -115,10 +115,14 @@ class _Pdf {
         this.pdfWin = new BrowserWindow(winOptions);
         this.pdfWin.once('ready-to-show',()=>{
             this.pdfWin.show()
-            this.pdfWin.webContents.openDevTools()
         })
         this.pdfWin.webContents.once('dom-ready', async () => {
             await this.handleWin.loadURL(BLANK_PAGE);
+        })
+        this.pdfWin.webContents.on('before-input-event', (event, input)=>{
+            if((input.meta || input.control ) && input.key === "F12"){
+                this.pdfWin.webContents.openDevTools({})
+            }
         })
         this.pdfWin.once('close', () => {
             console.info("PdfWindow is closing");
@@ -130,7 +134,6 @@ class _Pdf {
             }
         });
         this.pdfWin.loadURL(INDEX_PAGE);
-        // this.win.webContents.openDevTools()
     }
 
     private createPdfHandleWin() {
@@ -139,7 +142,6 @@ class _Pdf {
             height: 300,
             show: false,
             frame: false,
-            transparent:true,
             webPreferences: {
                 sandbox: true,
                 nodeIntegration: true,

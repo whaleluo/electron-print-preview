@@ -1,4 +1,8 @@
 > electron-print-preview : 模拟浏览器中的打印预览模块。(参考浏览器为electron项目提供打印预览功能)
+
+## 注意
+1. electron不同版本之间打印相关api变化比较大
+2. 当前组件依赖于electron@24.1.2
 ## 安装
 
 [![NPM](https://nodei.co/npm/electron-print-preview.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/electron-print-preview/)
