@@ -233,6 +233,7 @@ const html =`<!DOCTYPE html>
         .sys-print button{
             border: none;
             cursor: pointer;
+            visibility: hidden;        
         }
     </style>
 </head>
