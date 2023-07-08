@@ -1,6 +1,6 @@
 import {ipcMain,IpcMainEvent,IpcMainInvokeEvent, WebContentsPrintOptions,app} from "electron";
 import {closeWindow, getPrinterListAsync, translateMM, } from "./util";
-import {PdfCreateOptions, PdfReloadOptions} from "./type";
+import {HtmlConstruct, PdfCreateOptions, PdfReloadOptions} from "./type";
 import printPreview from "./printPreview";
     ipcMain.handle('get-printer-list-async',getPrinterListAsync);
     ipcMain.handle("close-pdf-window", closeWindow);
@@ -65,4 +65,5 @@ import printPreview from "./printPreview";
     })
 
 const startPrint:( pdfOptions: PdfCreateOptions,event: IpcMainEvent | undefined,)=>void = printPreview.createPdfWindow.bind(printPreview)
-export {startPrint}
+const initPrintPgae:(config: HtmlConstruct)=>void = printPreview.initPage.bind(printPreview)
+export {startPrint,initPrintPgae}

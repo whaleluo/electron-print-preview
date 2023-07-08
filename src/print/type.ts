@@ -57,3 +57,7 @@ export interface configPdfOptions {
      */
     defaultScaleFactor?:number
 }
+export interface HtmlConstruct {
+    style?: string | undefined,
+    script?: string | undefined,
+}

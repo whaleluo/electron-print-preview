@@ -20,5 +20,24 @@ app.whenReady().then(()=>{
 })
 
 ```
-
 ![](https://whaleluo.oss-cn-beijing.aliyuncs.com/imageselectron_pdf.gif)
+4. 自定义预览页面的样式
+```js
+const {startPrint,initPrintPgae} = require("electron-print-preview");
+const {app} = require("electron");
+app.whenReady().then(()=>{
+    initPrintPgae({style:"body{background-color: black;} .options{background-color: cadetblue;}"})
+    startPrint({htmlString :`<style>h1{color: #42b983}</style> <h1>hello world !</h1>`},undefined)
+})
+```
+5. 预览页面加载完成执行js
+```js
+const {startPrint,initPrintPgae} = require("electron-print-preview");
+const {app} = require("electron");
+app.whenReady().then(()=>{
+    initPrintPgae({style:"body{background-color: black;} .options{background-color: cadetblue;}",script:"alert('初始化完成')"})
+    startPrint({htmlString :`<style>h1{color: #42b983}</style> <h1>hello world !</h1>`},undefined)
+})
+```
+6. Ctrl+F12可以打开预览页面的控制台
+

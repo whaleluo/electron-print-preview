@@ -8,9 +8,10 @@ import {
     INDEX_PAGE,
     PAGE_SIZES, translateMM, getBaseUrl, removeAtPageStyle, webContentsPrint
 } from './util'
-import {PdfCreateOptions, PdfReloadOptions} from "./type";
-const initPage = require('./initPage')
-initPage()
+import {HtmlConstruct, PdfCreateOptions, PdfReloadOptions} from "./type";
+const configInitPage = require('./printPage')
+
+const {writeDataToHtml, print_page} = require("./util");
 
 class _Pdf {
     public pageSize: string;
@@ -29,6 +30,12 @@ class _Pdf {
         this.landscape = defaultConfigPdfOptions.landscape
         this.margin = defaultConfigPdfOptions.margin
         this.scaleFactor = defaultConfigPdfOptions.scaleFactor
+        this.initPage({})
+    }
+
+    public initPage(config:HtmlConstruct):void{
+        const html = configInitPage(config)
+        writeDataToHtml(print_page, html)
     }
 
     getPrintToPdfOptions(): PrintToPDFOptions {
